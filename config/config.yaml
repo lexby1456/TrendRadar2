@@ -1,6 +1,6 @@
 # ═══════════════════════════════════════════════════════════════
 #                    TrendRadar 配置文件
-# 版本：2.2.0
+#                      Version: 2.2.0
 # ═══════════════════════════════════════════════════════════════
 
 
@@ -10,7 +10,7 @@
 # ===============================================================
 # 1. 基础设置
 # ===============================================================
-应用:
+app:
   # 时区配置（影响所有时间显示、调度系统判断、数据存储）
   # 常用时区：
   #   - Asia/Shanghai (北京时间 UTC+8)
@@ -41,7 +41,7 @@
 # ===============================================================
 schedule:
   enabled: true                         # 是否启用调度系统
-  preset: "morning_evening"             # 预设模板名称（见上方说明）
+  preset: "night_owl"             # 预设模板名称（见上方说明）
 
 
 # ===============================================================
@@ -144,14 +144,14 @@ rss:
 report:
   mode: "daily"                     # daily | current | incremental（schedule 开启时作为默认值）
 
-  display_mode: "keyword"             # 分组维度: keyword | platform
+  display_mode: "platform"             # 分组维度: keyword | platform
                                       # keyword: 按关键词分组显示（默认）
                                       # platform: 按平台/来源分组显示
 
   # 关键词模式分组排序方式（仅 keyword 模式生效）
   # true: 按 frequency_words.txt 的定义顺序排列
   # false: 按匹配到的热点条数排序（条数多的在前）
-  sort_by_position_first: false
+  sort_by_position_first: true
 
   rank_threshold: 5                   # 排名高亮阈值（影响展示强调，不改变抓取范围）
 
@@ -252,9 +252,9 @@ display:
     hotlist: true # 热榜区域（关键词匹配 / AI 智能筛选）
     rss: false # RSS 订阅区域
     standalone: false # 独立展示区（完整热榜/RSS，不受关键词过滤）
-    ai_analysis: true # AI 分析区域
+    ai_analysis: false # AI 分析区域
   standalone:
-    platforms: ["zhihu","toutiao","baidu","weibo"] # 热榜平台 ID 列表（如 ["zhihu", "weibo"]）
+    platforms: ["zhihu","toutiao","baidu","weibo","wallstreetcn-hot","thepaper","cls-hot","bilibili-hot-search","tieba","douyin","ifeng"] # 热榜平台 ID 列表（如 ["zhihu", "weibo"]）
     rss_feeds: []                     # RSS 源 ID 列表（如 ["hacker-news"]）
     max_items: 10                     # 每个源最多展示条数（0=不限制）
 
@@ -546,27 +546,27 @@ advanced:
   # RSS 设置
   rss:
     request_interval: 1000            # 请求间隔（毫秒）
-超时: 15                       # 请求超时（秒）
+    timeout: 15                       # 请求超时（秒）
     use_proxy: false                  # 是否使用代理
     proxy_url: ""                     # RSS 专属代理（留空则使用 crawler.default_proxy）
 
   # 排序权重（用于重新排序不同平台的热搜）
   # 合起来等于 1
-权重:
-排名: 0.6                         # 排名权重
-频次: 0.3                    # 频次权重
-热度: 0.1                      # 热度权重
+  weight:
+    rank: 0.6                         # 排名权重
+    frequency: 0.3                    # 频次权重
+    hotness: 0.1                      # 热度权重
 
   # 多账号限制
   max_accounts_per_channel: 3         # 每个渠道最大账号数量
 
   # 以下为内部参数（一般无需修改）
   # 消息分批大小（字节）- 内部配置，请勿修改
-批量大小:
-默认: 4000
-钉钉: 20000
-飞书: 30000
-巴克: 4000
-松弛: 4000
+  batch_size:
+    default: 4000
+    dingtalk: 20000
+    feishu: 30000
+    bark: 4000
+    slack: 4000
   batch_send_interval: 3              # 批次发送间隔（秒）
   feishu_message_separator: "━━━━━━━━━━━━━━━━"
